@@ -6,8 +6,7 @@ public class BulletMovement : MonoBehaviour
 {
     float projectileSpeed;
     [SerializeField] PlayerRun playerRun;
-    [SerializeField] SpriteRenderer spriteRenderer;
-    bool right = true;
+    bool EnemeyRight = true;
     Rigidbody2D rb;
 
 
@@ -16,7 +15,7 @@ public class BulletMovement : MonoBehaviour
        gameObject.GetComponent<PlayerShooter>();
        rb = GetComponent<Rigidbody2D>();
        playerRun = FindObjectOfType<PlayerRun>();
-
+        
     }
 
     private void Start()
@@ -30,7 +29,7 @@ public class BulletMovement : MonoBehaviour
     private void PlayerRun_OnFlipEvent(object sender, System.EventArgs e)
     {
         Flip();
-        right = playerRun.facingRight;
+        EnemeyRight = playerRun.facingRight;
     }
 
     void Update()
@@ -39,15 +38,15 @@ public class BulletMovement : MonoBehaviour
         projectileSpeed = PlayerStatics.Instance.projectileSpeed;
         
 
-        if (right != playerRun.facingRight)
+        if (EnemeyRight != playerRun.facingRight)
         {
             Flip();
-            right = playerRun.facingRight;
+            EnemeyRight = playerRun.facingRight;
         }
 
         
 
-        if (right == false)
+        if (EnemeyRight == false)
         {
             rb.velocity = transform.right * projectileSpeed;
 
@@ -70,7 +69,7 @@ public class BulletMovement : MonoBehaviour
     public void Flip()
     {
 
-        spriteRenderer.flipX = right;
+        spriteRenderer.flipX = EnemeyRight;
 
     }
 
