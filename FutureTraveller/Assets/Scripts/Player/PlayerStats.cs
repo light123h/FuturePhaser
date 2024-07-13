@@ -7,9 +7,8 @@ using UnityEngine.Events;
 
 public enum statType
 {
-    enemy,
-    player,
-    fireball,
+    area1enemy, area2enemy,area3enemy, area4enemy,
+    player, projectile
 }
 
 public class PlayerStats : MonoBehaviour
@@ -23,6 +22,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]bool player;
     [SerializeField] bool damageblae = true;
 
+    [SerializeField] bool area1Enemy;
+    [SerializeField] bool area2Enemy;
+    [SerializeField] bool area3Enemy;
+    [SerializeField] bool area4Enemy;
+
     float timer;
 
     [Header("Events")]
@@ -33,7 +37,11 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        if(statType == statType.enemy)
+        if(statType == statType.area1enemy || statType == statType.area2enemy || statType == statType.area3enemy || statType == statType.area4enemy)
+        {
+            health = PlayerStatics.Instance.enemyHealth;
+        }
+        if(statType == statType.player)
         {
             health = PlayerStatics.Instance.health;
         }
@@ -56,7 +64,7 @@ public class PlayerStats : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         
-            if (timer <= 0 && statType == statType.player)
+            if (timer <= 0 && player  == true)
             {
              
                 DamageDealer damageDealer = other.GetComponent<DamageDealer>();
@@ -74,8 +82,34 @@ public class PlayerStats : MonoBehaviour
 
                 if (damageDealer != null)
                 {
+                    
                     TakeDamage(damageDealer.GetDamage());
+
+                if (area1Enemy == true && damageDealer.GetDamageType() == damageType.area1)
+                {
+                    TakeDamage(damageDealer.GetDamage() * 9);
                 }
+
+                if (area2Enemy == true && damageDealer.GetDamageType() == damageType.area2)
+                {
+                    TakeDamage(damageDealer.GetDamage() * 9);
+                }
+
+                if (area3Enemy == true && damageDealer.GetDamageType() == damageType.area3)
+                {
+                    TakeDamage(damageDealer.GetDamage() * 9);
+                }
+
+                if (area4Enemy == true && damageDealer.GetDamageType() == damageType.area4)
+                {
+                    TakeDamage(damageDealer.GetDamage() * 9);
+                }
+
+
+            }
+
+                
+            
             }
         
        
@@ -90,6 +124,7 @@ public class PlayerStats : MonoBehaviour
         {
             damageblae = false;
             health -= Damage;
+            Debug.Log("Damaged");
         }
         
 
@@ -107,7 +142,7 @@ public class PlayerStats : MonoBehaviour
 
     public void DIE()
     {
-        if (statType == statType.enemy)
+        if (statType == statType.area1enemy || statType == statType.area2enemy || statType == statType.area3enemy || statType == statType.area4enemy)
         {
             
             Destroy(gameObject);
@@ -119,7 +154,7 @@ public class PlayerStats : MonoBehaviour
             gameObject.SetActive(false);
             
         }
-        if (statType == statType.fireball)
+        if (statType == statType.projectile)
         {
             Destroy(gameObject);
         }
@@ -142,15 +177,15 @@ public class PlayerStats : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (statType == statType.enemy)
+        if (statType == statType.area1enemy || statType == statType.area2enemy || statType == statType.area3enemy || statType == statType.area4enemy)
         {
             AudioManager.Instance.CasualExplosion();
-            PlayerStatics.Instance.AddScore(scoreGiven * PlayerStatics.Instance.Multiplier);
+            PlayerStatics.Instance.AddScore(scoreGiven);
             PlayerStatics.Instance.AddExperience(1);
             
         }
 
-        if (statType == statType.fireball)
+        if (statType == statType.projectile)
         {
             AudioManager.Instance.PlayerExplosion();
             

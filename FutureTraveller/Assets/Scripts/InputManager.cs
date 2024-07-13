@@ -52,10 +52,26 @@ public class InputManager : MonoBehaviour
 
 #else
         Input.GetKeyDown(KeyCode.M);
+        
+        
+        
 #endif
     }
 
- 
+    public bool IsTButtonDownThisFrame()
+    {
+#if USE_NEW_INPUT_SYSTEM
+        return inputActions.Player.Testing.WasPressedThisFrame();
+
+#else
+        Input.GetKeyDown(KeyCode.T);
+        
+        
+        
+#endif
+    }
+
+
 
 
 }

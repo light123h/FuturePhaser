@@ -5,7 +5,7 @@ using UnityEngine;
 public enum damageType
 {
     enemy,
-    player
+    area1, area2, area3, area4,
 }
 public class DamageDealer : MonoBehaviour
 {

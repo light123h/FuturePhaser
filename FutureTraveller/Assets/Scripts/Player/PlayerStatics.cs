@@ -9,17 +9,20 @@ public class PlayerStatics : MonoBehaviour
 {
     public static PlayerStatics Instance { get; private set; }
 
-    public float jumpForce = 400f;
     public int damageDealt = 1;
     public float projectileSpeed = 5;
     public float cooldown;
-    public float Multiplier;
     public float Experience;
     public float totalScore;
+    public bool area1Stay;
+    public bool area2Stay;
+    public bool area3Stay;
+    public bool area4Stay;
 
     //EnemyStats
 
     public int health = 1;
+    public int enemyHealth = 5;
     float enemyCooldown = 5;
     public float enemySpeed;
     [SerializeField] GameObject [] enemies;
@@ -71,18 +74,14 @@ public class PlayerStatics : MonoBehaviour
 
     private void UpdateAll()
     {
-        UI.instance.UpdateJump(jumpForce);
+        /*
         UI.instance.UpdateDamage(damageDealt);
         UI.instance.UpdateProjectileSpeed(projectileSpeed);
         UI.instance.UpdateCooldown(cooldown);
         UI.instance.UpdateMultiplier(projectileSpeed);
+        */
     }
 
-    public void AddJumpForce(float amount)
-    {
-        jumpForce += amount;
-        UI.instance.UpdateJump(jumpForce);
-    }
 
     public void AddDamage(int amount)
     {
@@ -102,11 +101,6 @@ public class PlayerStatics : MonoBehaviour
         UI.instance.UpdateCooldown(cooldown);
     }
 
-    public void AddMultiplier(float amount)
-    {
-        Multiplier += amount;
-        UI.instance.UpdateMultiplier(Multiplier);
-    }
 
     public void AddExperience(int amount)
     {
@@ -114,11 +108,6 @@ public class PlayerStatics : MonoBehaviour
         UI.instance.UpdateExperience(Experience);
     }
 
-    public void RestExperience(int amount)
-    {
-        Experience -= amount;
-        UI.instance.UpdateExperience(Experience);
-    }
 
     public void AddScore(float amount)
     {

@@ -80,6 +80,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Testing"",
+                    ""type"": ""Button"",
+                    ""id"": ""7c1f939d-21a2-454c-94d9-7c3721c176d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -148,6 +157,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38316a23-7ff7-4fcd-83b2-2575c1926446"",
+                    ""path"": ""<Keyboard>/#(T)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Testing"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -162,6 +182,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Right = m_Player.FindAction("Right", throwIfNotFound: true);
         m_Player_Left = m_Player.FindAction("Left", throwIfNotFound: true);
+        m_Player_Testing = m_Player.FindAction("Testing", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +250,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Right;
     private readonly InputAction m_Player_Left;
+    private readonly InputAction m_Player_Testing;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -239,6 +261,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Right => m_Wrapper.m_Player_Right;
         public InputAction @Left => m_Wrapper.m_Player_Left;
+        public InputAction @Testing => m_Wrapper.m_Player_Testing;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -266,6 +289,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Left.started += instance.OnLeft;
             @Left.performed += instance.OnLeft;
             @Left.canceled += instance.OnLeft;
+            @Testing.started += instance.OnTesting;
+            @Testing.performed += instance.OnTesting;
+            @Testing.canceled += instance.OnTesting;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -288,6 +314,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Left.started -= instance.OnLeft;
             @Left.performed -= instance.OnLeft;
             @Left.canceled -= instance.OnLeft;
+            @Testing.started -= instance.OnTesting;
+            @Testing.performed -= instance.OnTesting;
+            @Testing.canceled -= instance.OnTesting;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -313,5 +342,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
         void OnLeft(InputAction.CallbackContext context);
+        void OnTesting(InputAction.CallbackContext context);
     }
 }
